@@ -1,0 +1,209 @@
+<div class="register-page">
+  <!-- Background Gradient -->
+  <div class="gradient-bg"></div>
+  
+  <div class="container">
+    <div class="row align-items-center min-vh-100">
+      
+      <!-- Registration Form Section -->
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <div class="register-form-container" data-aos="fade-up">
+          
+          <!-- Page Header & Introduction -->
+          <div class="text-center mb-4">
+            <div class="logo-section mb-3">
+              <i class="fas fa-user-plus fa-3x text-primary"></i>
+            </div>
+            <h1 class="register-title">Create Account</h1>
+            <p class="register-description">
+              Join our platform today and unlock exclusive features. 
+              Your secure journey starts here with just a few simple steps.
+            </p>
+          </div>
+
+          <!-- Registration Form -->
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            
+            <!-- Full Name Field -->
+            <div class="mb-3">
+              <label for="fullName" class="form-label">
+                <i class="fas fa-user me-2"></i>Full Name
+              </label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="fullName" 
+                formControlName="fullName"
+                placeholder="Enter your full name"
+                [ngClass]="{ 'is-invalid': f['fullName'].touched && f['fullName'].invalid }"
+              >
+              <div class="invalid-feedback" *ngIf="f['fullName'].touched && f['fullName'].invalid">
+                {{ getErrorMessage('fullName') }}
+              </div>
+            </div>
+
+            <!-- Email Field -->
+            <div class="mb-3">
+              <label for="email" class="form-label">
+                <i class="fas fa-envelope me-2"></i>Email Address
+              </label>
+              <input 
+                type="email" 
+                class="form-control" 
+                id="email" 
+                formControlName="email"
+                placeholder="Enter your email address"
+                [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].invalid }"
+              >
+              <div class="invalid-feedback" *ngIf="f['email'].touched && f['email'].invalid">
+                {{ getErrorMessage('email') }}
+              </div>
+            </div>
+
+            <!-- Mobile Number Field -->
+            <div class="mb-3">
+              <label for="mobile" class="form-label">
+                <i class="fas fa-phone me-2"></i>Mobile Number
+              </label>
+              <input 
+                type="tel" 
+                class="form-control" 
+                id="mobile" 
+                formControlName="mobile"
+                placeholder="Enter your mobile number"
+                [ngClass]="{ 'is-invalid': f['mobile'].touched && f['mobile'].invalid }"
+              >
+              <div class="invalid-feedback" *ngIf="f['mobile'].touched && f['mobile'].invalid">
+                {{ getErrorMessage('mobile') }}
+              </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="mb-3">
+              <label for="password" class="form-label">
+                <i class="fas fa-lock me-2"></i>Password
+              </label>
+              <div class="input-group">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  class="form-control" 
+                  id="password" 
+                  formControlName="password"
+                  placeholder="Create a strong password"
+                  [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].invalid }"
+                >
+                <button 
+                  class="btn btn-outline-secondary" 
+                  type="button"
+                  (click)="togglePasswordVisibility('password')"
+                >
+                  <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" *ngIf="f['password'].touched && f['password'].invalid">
+                {{ getErrorMessage('password') }}
+              </div>
+              <small class="text-muted">
+                Password must contain uppercase, lowercase, and numbers (6-20 chars)
+              </small>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="mb-4">
+              <label for="confirmPassword" class="form-label">
+                <i class="fas fa-lock me-2"></i>Confirm Password
+              </label>
+              <div class="input-group">
+                <input 
+                  [type]="showConfirmPassword ? 'text' : 'password'" 
+                  class="form-control" 
+                  id="confirmPassword" 
+                  formControlName="confirmPassword"
+                  placeholder="Confirm your password"
+                  [ngClass]="{ 'is-invalid': (f['confirmPassword'].touched || f['password'].touched) && registerForm.errors?.['passwordMismatch'] }"
+                >
+                <button 
+                  class="btn btn-outline-secondary" 
+                  type="button"
+                  (click)="togglePasswordVisibility('confirmPassword')"
+                >
+                  <i class="fas" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" *ngIf="(f['confirmPassword'].touched || f['password'].touched) && registerForm.errors?.['passwordMismatch']">
+                Passwords do not match
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-grid gap-2 mb-3">
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-lg"
+                [disabled]="isLoading || registerForm.invalid"
+                data-aos="zoom-in"
+                data-aos-delay="200"
+              >
+                <span *ngIf="!isLoading">
+                  <i class="fas fa-user-plus me-2"></i>Create Account
+                </span>
+                <span *ngIf="isLoading">
+                  <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Creating Account...
+                </span>
+              </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="text-center">
+              <p class="mb-0">
+                Already have an account? 
+                <a href="javascript:void(0)" (click)="navigateToLogin()" class="login-link">
+                  Sign In Here
+                </a>
+              </p>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- Supporting Image Section -->
+      <div class="col-lg-6 d-none d-lg-block">
+        <div class="image-section" data-aos="fade-left">
+          <div class="image-container">
+            <img 
+              src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=800&q=80" 
+              alt="Register" 
+              class="img-fluid rounded-3 shadow-lg"
+            >
+            <div class="image-overlay">
+              <div class="overlay-content">
+                <h3 class="text-white mb-3">Start Your Journey</h3>
+                <ul class="list-unstyled text-white">
+                  <li class="mb-2">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Secure Account Creation
+                  </li>
+                  <li class="mb-2">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Instant Access to Features
+                  </li>
+                  <li class="mb-2">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Professional Dashboard
+                  </li>
+                  <li class="mb-2">
+                    <i class="fas fa-check-circle me-2"></i>
+                    24/7 Support Available
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

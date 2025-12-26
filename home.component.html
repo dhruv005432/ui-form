@@ -1,0 +1,226 @@
+<!-- Hero / Welcome Section -->
+<header class="hero-section">
+  <div class="container">
+    <div class="row align-items-center min-vh-100">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="hero-content">
+          <div class="logo-section mb-4">
+            <h1 class="brand-name">
+              <i class="fas fa-layer-group me-2"></i>
+              UI Form Platform
+            </h1>
+          </div>
+          <h2 class="hero-title mb-3">Welcome to Your Digital Hub</h2>
+          <p class="hero-subtitle mb-4">
+            A comprehensive platform for secure form management, user authentication, and role-based dashboard access. 
+            Experience seamless interaction with modern design and powerful features.
+          </p>
+          <div class="hero-actions">
+            <button (click)="navigateToLogin()" class="btn btn-primary btn-lg me-3 mb-3 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+              <i class="fas fa-sign-in-alt me-2"></i>
+              Login
+            </button>
+            <button (click)="navigateToRegister()" class="btn btn-outline-primary btn-lg me-3 mb-3 mb-lg-0" data-aos="zoom-in" data-aos-delay="300">
+              <i class="fas fa-user-plus me-2"></i>
+              Register
+            </button>
+            <button *ngIf="isLoggedIn()" (click)="navigateToDashboard()" class="btn btn-success btn-lg mb-3 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
+              <i class="fas fa-tachometer-alt me-2"></i>
+              Go to Dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+               alt="Digital Platform" 
+               class="img-fluid rounded-4 shadow-lg">
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Application Overview Section -->
+<section class="overview-section py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+        <h2 class="section-title">Platform Overview</h2>
+        <p class="section-subtitle">Discover what makes our platform powerful and secure</p>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+        <div class="overview-content">
+          <h3 class="mb-3">Built for Everyone</h3>
+          <p class="mb-4">
+            Our platform serves diverse user needs with secure, role-based access control. 
+            Whether you're a regular user or an administrator, you'll find tools designed 
+            specifically for your requirements.
+          </p>
+          <div class="overview-points">
+            <div class="point-item mb-3">
+              <i class="fas fa-users text-primary me-3"></i>
+              <div>
+                <h5 class="mb-1">Multi-User Support</h5>
+                <p class="mb-0 text-muted">Designed for users and administrators with distinct roles</p>
+              </div>
+            </div>
+            <div class="point-item mb-3">
+              <i class="fas fa-shield-alt text-success me-3"></i>
+              <div>
+                <h5 class="mb-1">Secure Authentication</h5>
+                <p class="mb-0 text-muted">Enterprise-grade security with session management</p>
+              </div>
+            </div>
+            <div class="point-item">
+              <i class="fas fa-mobile-alt text-info me-3"></i>
+              <div>
+                <h5 class="mb-1">Responsive Design</h5>
+                <p class="mb-0 text-muted">Works seamlessly across all devices and screen sizes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+             alt="Platform Overview" 
+             class="img-fluid rounded-4 shadow-lg">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Features Section -->
+<section class="features-section py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center mb-5" data-aos="fade-up">
+        <h2 class="section-title">Key Features</h2>
+        <p class="section-subtitle">Powerful capabilities that enhance your experience</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-card h-100">
+          <div class="feature-icon">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h4 class="feature-title">Secure Login & Registration</h4>
+          <p class="feature-description">
+            Advanced authentication system with encrypted credentials, session management, and password recovery options.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-card h-100">
+          <div class="feature-icon">
+            <i class="fas fa-tachometer-alt"></i>
+          </div>
+          <h4 class="feature-title">User & Admin Dashboards</h4>
+          <p class="feature-description">
+            Role-based dashboards tailored to user permissions with comprehensive analytics and management tools.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-card h-100">
+          <div class="feature-icon">
+            <i class="fas fa-user-edit"></i>
+          </div>
+          <h4 class="feature-title">Profile Management</h4>
+          <p class="feature-description">
+            Complete control over user profiles with easy editing, avatar uploads, and personal information management.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="feature-card h-100">
+          <div class="feature-icon">
+            <i class="fas fa-key"></i>
+          </div>
+          <h4 class="feature-title">Password Recovery</h4>
+          <p class="feature-description">
+            Secure password reset process with email verification and temporary token-based authentication.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+        <div class="feature-card h-100">
+          <div class="feature-icon">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h4 class="feature-title">Role-Based Access</h4>
+          <p class="feature-description">
+            Granular permission system ensuring users only access features appropriate to their role level.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+        <div class="feature-card h-100">
+          <div class="feature-icon">
+            <i class="fas fa-bell"></i>
+          </div>
+          <h4 class="feature-title">Real-time Notifications</h4>
+          <p class="feature-description">
+            Instant alerts and updates using modern notification system with customizable preferences.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call-to-Action Section -->
+<section class="cta-section py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center" data-aos="zoom-in">
+        <h2 class="cta-title mb-4">Ready to Get Started?</h2>
+        <p class="cta-subtitle mb-4">
+          Join thousands of users who trust our platform for their digital needs
+        </p>
+        <div class="cta-actions">
+          <button *ngIf="!isLoggedIn()" (click)="navigateToRegister()" class="btn btn-primary btn-lg me-3 mb-3 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
+            <i class="fas fa-rocket me-2"></i>
+            Create Account
+          </button>
+          <button (click)="navigateToLogin()" class="btn btn-outline-primary btn-lg me-3 mb-3 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-sign-in-alt me-2"></i>
+            Login
+          </button>
+          <button *ngIf="isLoggedIn()" (click)="navigateToDashboard()" class="btn btn-success btn-lg mb-3 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <i class="fas fa-tachometer-alt me-2"></i>
+            Go to Dashboard
+          </button>
+        </div>
+        <div class="cta-stats mt-5" data-aos="fade-up" data-aos-delay="400">
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="stat-item">
+                <h3 class="stat-number">1000+</h3>
+                <p class="stat-label">Active Users</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="stat-item">
+                <h3 class="stat-number">99.9%</h3>
+                <p class="stat-label">Uptime</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="stat-item">
+                <h3 class="stat-number">24/7</h3>
+                <p class="stat-label">Support</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,201 @@
+<div class="profile-container">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="profile-header text-center mb-5" data-aos="fade-up">
+          <h1 class="display-4 fw-bold mb-3">My Profile</h1>
+          <p class="lead text-muted">Manage your personal information and account settings</p>
+        </div>
+
+        <div class="row">
+          <!-- Profile Image Section -->
+          <div class="col-md-4 mb-4" data-aos="fade-left">
+            <div class="profile-image-card text-center">
+              <div class="profile-image-wrapper">
+                <img 
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=400&fit=crop&crop=face" 
+                  alt="Profile" 
+                  class="profile-image rounded-circle mb-3"
+                >
+                <div class="profile-status online"></div>
+              </div>
+              <h4 class="mb-2">{{ profileForm.get('fullName')?.value || 'User' }}</h4>
+              <p class="text-muted mb-4">{{ profileForm.get('email')?.value || 'user@example.com' }}</p>
+              
+              <div class="profile-stats">
+                <div class="stat-item">
+                  <span class="stat-number">{{ getAccountAge() }}</span>
+                  <span class="stat-label">Days Active</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number">{{ profileForm.get('mobile')?.value ? 'Verified' : 'Not Set' }}</span>
+                  <span class="stat-label">Mobile Status</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Form Section -->
+          <div class="col-md-8" data-aos="fade-up">
+            <div class="profile-form-card">
+              <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+                <!-- Personal Information -->
+                <div class="form-section">
+                  <h5 class="section-title">
+                    <i class="fas fa-user me-2"></i>
+                    Personal Information
+                  </h5>
+                  
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="fullName" class="form-label">Full Name *</label>
+                      <input 
+                        type="text" 
+                        class="form-control" 
+                        id="fullName"
+                        formControlName="fullName"
+                        placeholder="Enter your full name"
+                        [class.is-invalid]="profileForm.get('fullName')?.invalid && profileForm.get('fullName')?.touched"
+                      >
+                      <div class="invalid-feedback" *ngIf="profileForm.get('fullName')?.invalid && profileForm.get('fullName')?.touched">
+                        Full name is required (min. 3 characters)
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                      <label for="email" class="form-label">Email Address *</label>
+                      <input 
+                        type="email" 
+                        class="form-control" 
+                        id="email"
+                        formControlName="email"
+                        placeholder="Enter your email"
+                        [readonly]="!isEmailEditable"
+                        [class.is-invalid]="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
+                      >
+                      <div class="invalid-feedback" *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+                        Please enter a valid email address
+                      </div>
+                      <small class="form-text text-muted" *ngIf="!isEmailEditable">
+                        <i class="fas fa-lock me-1"></i>Email is protected and cannot be edited
+                      </small>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="mobile" class="form-label">Mobile Number *</label>
+                      <input 
+                        type="tel" 
+                        class="form-control" 
+                        id="mobile"
+                        formControlName="mobile"
+                        placeholder="Enter your mobile number"
+                        [class.is-invalid]="profileForm.get('mobile')?.invalid && profileForm.get('mobile')?.touched"
+                      >
+                      <div class="invalid-feedback" *ngIf="profileForm.get('mobile')?.invalid && profileForm.get('mobile')?.touched">
+                        Please enter a valid mobile number (10 digits)
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                      <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                      <input 
+                        type="date" 
+                        class="form-control" 
+                        id="dateOfBirth"
+                        formControlName="dateOfBirth"
+                        [max]="getMaxDate()"
+                      >
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="gender" class="form-label">Gender</label>
+                      <select class="form-select" id="gender" formControlName="gender">
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Address Information -->
+                <div class="form-section">
+                  <h5 class="section-title">
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    Address Information
+                  </h5>
+                  
+                  <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea 
+                      class="form-control" 
+                      id="address"
+                      formControlName="address"
+                      rows="3"
+                      placeholder="Enter your address"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <button 
+                        type="submit" 
+                        class="btn btn-primary btn-lg w-100"
+                        data-aos="zoom-in"
+                        [disabled]="profileForm.invalid || isSubmitting"
+                      >
+                        <i class="fas fa-save me-2" *ngIf="!isSubmitting"></i>
+                        <i class="fas fa-spinner fa-spin me-2" *ngIf="isSubmitting"></i>
+                        {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
+                      </button>
+                    </div>
+                    <div class="col-md-3">
+                      <button 
+                        type="button" 
+                        class="btn btn-outline-secondary w-100"
+                        (click)="resetForm()"
+                        [disabled]="isSubmitting"
+                      >
+                        <i class="fas fa-undo me-2"></i>
+                        Reset
+                      </button>
+                    </div>
+                    <div class="col-md-3">
+                      <button 
+                        type="button" 
+                        class="btn btn-outline-warning w-100"
+                        (click)="navigateToChangePassword()"
+                      >
+                        <i class="fas fa-key me-2"></i>
+                        Change Password
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Auto-save Indicator -->
+                <div class="auto-save-indicator" *ngIf="hasUnsavedChanges">
+                  <div class="alert alert-info d-flex align-items-center" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <div>
+                      <small>You have unsaved changes. They are being auto-saved.</small>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

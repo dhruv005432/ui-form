@@ -1,0 +1,80 @@
+/* Additional CSS fallback for Admin Dashboard */
+/* This file provides additional styling that complements the SCSS file */
+
+/* Ensure proper modal backdrop behavior */
+.modal.show {
+  display: block !important;
+}
+
+.modal-backdrop.show {
+  display: block !important;
+}
+
+/* Fix for dropdown menus in tables */
+.dropdown-menu {
+  z-index: 1050;
+}
+
+/* Ensure proper table responsiveness */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Additional hover effects */
+.btn:hover {
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner-border {
+  animation: spin 1s linear infinite;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5a6fd8;
+}
+
+/* Fix for modal focus issues */
+.modal:focus {
+  outline: none;
+}
+
+.modal-content:focus {
+  outline: none;
+}
+
+/* Ensure proper button group behavior */
+.btn-group .btn {
+  position: relative;
+  float: left;
+}
+
+/* Additional responsive fixes */
+@media (max-width: 768px) {
+  .btn-group-vertical .btn {
+    display: block;
+    width: 100%;
+  }
+}

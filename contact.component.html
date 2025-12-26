@@ -1,0 +1,222 @@
+<div class="contact-page">
+  <!-- Page Header & Introduction -->
+  <section class="contact-header" data-aos="fade-down">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="page-title">Contact Us</h1>
+          <p class="page-description">
+            We're here to help! Whether you have questions, feedback, or need support, 
+            our team is ready to assist you. Reach out to us through any of the channels below.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Information Section -->
+  <section class="contact-info" data-aos="fade-right">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <h5>Email</h5>
+            <p>{{ contactInfo.email }}</p>
+            <small class="text-muted">We respond within 24 hours</small>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <h5>Phone</h5>
+            <p>{{ contactInfo.phone }}</p>
+            <small class="text-muted">Mon-Fri, 9AM-6PM EST</small>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h5>Office</h5>
+            <p>{{ contactInfo.address }}</p>
+            <small class="text-muted">{{ contactInfo.workingHours }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="contact-form-section" data-aos="fade-up">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="form-container">
+            <h3 class="form-title">Send us a Message</h3>
+            <p class="form-subtitle">Fill out the form below and we'll get back to you as soon as possible.</p>
+
+            <!-- Success Message -->
+            <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="fas fa-check-circle me-2"></i>
+              <strong>Success!</strong> Your message has been sent successfully. Our team will contact you soon.
+              <button type="button" class="btn-close" (click)="showSuccessMessage = false"></button>
+            </div>
+
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="fullName" class="form-label">Full Name *</label>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="fullName" 
+                    formControlName="fullName"
+                    [ngClass]="{ 'is-invalid': getFieldError('fullName') }"
+                    placeholder="John Doe"
+                  >
+                  <div class="invalid-feedback" *ngIf="getFieldError('fullName')">
+                    {{ getFieldError('fullName') }}
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="email" class="form-label">Email Address *</label>
+                  <input 
+                    type="email" 
+                    class="form-control" 
+                    id="email" 
+                    formControlName="email"
+                    [ngClass]="{ 'is-invalid': getFieldError('email') }"
+                    placeholder="john@example.com"
+                  >
+                  <div class="invalid-feedback" *ngIf="getFieldError('email')">
+                    {{ getFieldError('email') }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="subject" class="form-label">Subject *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="subject" 
+                  formControlName="subject"
+                  [ngClass]="{ 'is-invalid': getFieldError('subject') }"
+                  placeholder="How can we help you?"
+                >
+                <div class="invalid-feedback" *ngIf="getFieldError('subject')">
+                  {{ getFieldError('subject') }}
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="message" class="form-label">Message *</label>
+                <textarea 
+                  class="form-control" 
+                  id="message" 
+                  rows="5" 
+                  formControlName="message"
+                  [ngClass]="{ 'is-invalid': getFieldError('message') }"
+                  placeholder="Please describe your inquiry in detail..."
+                ></textarea>
+                <div class="invalid-feedback" *ngIf="getFieldError('message')">
+                  {{ getFieldError('message') }}
+                </div>
+                <small class="text-muted">
+                  {{ contactForm.value.message?.length || 0 }}/500 characters
+                </small>
+              </div>
+
+              <div class="form-actions">
+                <button 
+                  type="submit" 
+                  class="btn btn-primary btn-lg submit-btn"
+                  [disabled]="isSubmitting"
+                  data-aos="zoom-in"
+                >
+                  <i class="fas fa-paper-plane me-2"></i>
+                  <span *ngIf="!isSubmitting">Send Message</span>
+                  <span *ngIf="isSubmitting">
+                    <i class="fas fa-spinner fa-spin me-2"></i>
+                    Sending...
+                  </span>
+                </button>
+                <button 
+                  type="button" 
+                  class="btn btn-outline-secondary btn-lg clear-btn"
+                  (click)="clearForm()"
+                  [disabled]="isSubmitting"
+                >
+                  <i class="fas fa-eraser me-2"></i>
+                  Clear Form
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visual / Image Section -->
+  <section class="visual-section" data-aos="fade-in">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="visual-content">
+            <img 
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+              alt="Contact Support Team" 
+              class="img-fluid rounded-3"
+            >
+            <div class="visual-overlay">
+              <h4>Need Immediate Assistance?</h4>
+              <p>Our dedicated support team is available to help you with any questions or concerns.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support & Help Links -->
+  <section class="support-links" data-aos="fade-up">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h3 class="text-center mb-4">Other Ways to Get Help</h3>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="support-card">
+            <i class="fas fa-book"></i>
+            <h5>Help Center</h5>
+            <p>Browse our comprehensive documentation and guides.</p>
+            <a href="#" class="btn btn-outline-primary">Visit Help Center</a>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="support-card">
+            <i class="fas fa-comments"></i>
+            <h5>Live Chat</h5>
+            <p>Chat with our support team in real-time.</p>
+            <a href="#" class="btn btn-outline-primary">Start Chat</a>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="support-card">
+            <i class="fas fa-ticket-alt"></i>
+            <h5>Support Ticket</h5>
+            <p>Create a support ticket for complex issues.</p>
+            <a href="#" class="btn btn-outline-primary">Create Ticket</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

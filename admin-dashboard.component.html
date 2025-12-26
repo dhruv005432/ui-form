@@ -1,0 +1,288 @@
+<div class="admin-dashboard">
+  <!-- Header Section -->
+  <header class="dashboard-header" data-aos="fade-down">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="admin-info">
+            <div class="admin-avatar">
+              <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="admin-details">
+              <h1>Admin Dashboard</h1>
+              <p class="text-muted">Welcome back, {{ currentUser?.name || 'Administrator' }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <div class="header-actions">
+            <button class="btn btn-outline-primary me-2" (click)="refreshData()">
+              <i class="fas fa-sync-alt me-1"></i> Refresh
+            </button>
+            <button class="btn btn-danger" (click)="logout()">
+              <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div class="container-fluid">
+      
+      <!-- Summary Statistics Section -->
+      <section class="stats-section mb-4">
+        <h2 class="section-title" data-aos="fade-right">System Overview</h2>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 mb-3" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-card total-users">
+              <div class="stat-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-content">
+                <h3>{{ stats.totalUsers }}</h3>
+                <p>Total Users</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-card active-users">
+              <div class="stat-icon">
+                <i class="fas fa-user-check"></i>
+              </div>
+              <div class="stat-content">
+                <h3>{{ stats.activeUsers }}</h3>
+                <p>Active Users</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3" data-aos="fade-up" data-aos-delay="300">
+            <div class="stat-card inactive-users">
+              <div class="stat-icon">
+                <i class="fas fa-user-times"></i>
+              </div>
+              <div class="stat-content">
+                <h3>{{ stats.inactiveUsers }}</h3>
+                <p>Inactive/Blocked</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3" data-aos="fade-up" data-aos-delay="400">
+            <div class="stat-card new-registrations">
+              <div class="stat-icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <div class="stat-content">
+                <h3>{{ stats.newRegistrations }}</h3>
+                <p>New Registrations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- User Management Section -->
+      <section class="user-management mb-4" data-aos="fade-right">
+        <div class="section-header">
+          <h2 class="section-title">User Management</h2>
+          <div class="section-actions">
+            <div class="search-box">
+              <input type="text" class="form-control" placeholder="Search users..." 
+                     [(ngModel)]="searchTerm" (input)="filterUsers()"
+                     aria-label="Search users by name or email">
+              <i class="fas fa-search"></i>
+            </div>
+            <div class="form-select-wrapper">
+              <label for="roleFilter" class="visually-hidden">Filter by role</label>
+              <select class="form-select" id="roleFilter" [(ngModel)]="roleFilter" (change)="filterUsers()"
+                      title="Filter users by role" aria-label="Filter users by role">
+                <option value="">All Roles</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
+            </div>
+            <div class="form-select-wrapper">
+              <label for="statusFilter" class="visually-hidden">Filter by status</label>
+              <select class="form-select" id="statusFilter" [(ngModel)]="statusFilter" (change)="filterUsers()"
+                      title="Filter users by status" aria-label="Filter users by status">
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="blocked">Blocked</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="table-responsive">
+          <table class="table admin-table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Last Active</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of filteredUsers; trackBy: trackByUserId">
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar">
+                      <i class="fas fa-user"></i>
+                    </div>
+                    <span>{{ user.name }}</span>
+                  </div>
+                </td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <span class="role-badge" [class.admin]="user.role === 'admin'" 
+                        [class.user]="user.role === 'user'">
+                    {{ user.role | titlecase }}
+                  </span>
+                </td>
+                <td>
+                  <span class="status-badge" [class.active]="user.status === 'active'"
+                        [class.inactive]="user.status === 'inactive'"
+                        [class.blocked]="user.status === 'blocked'">
+                    {{ user.status | titlecase }}
+                  </span>
+                </td>
+                <td>{{ user.lastActive | date:'short' }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <button class="btn btn-sm btn-primary" (click)="editUser(user)" 
+                            title="Edit User">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-warning" (click)="toggleUserStatus(user)"
+                            title="Toggle Status">
+                      <i class="fas fa-toggle-on"></i>
+                    </button>
+                    <button class="btn btn-sm btn-info" (click)="resetPassword(user)"
+                            title="Reset Password">
+                      <i class="fas fa-key"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" (click)="deleteUser(user)"
+                            title="Delete User">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- System Activity & Logs -->
+      <section class="activity-logs mb-4" data-aos="fade-left">
+        <h2 class="section-title">System Activity & Logs</h2>
+        <div class="logs-container">
+          <div class="log-item" *ngFor="let log of activityLogs | slice:0:5">
+            <div class="log-icon" [class]="log.type">
+              <i [class]="getLogIcon(log.type)"></i>
+            </div>
+            <div class="log-content">
+              <p class="log-message">{{ log.message }}</p>
+              <span class="log-time">{{ log.timestamp | date:'short' }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Admin Actions -->
+      <section class="quick-actions" data-aos="zoom-in">
+        <h2 class="section-title">Quick Admin Actions</h2>
+        <div class="row">
+          <div class="col-md-3 col-sm-6 mb-3">
+            <div class="action-card" (click)="openAddAdminModal()">
+              <div class="action-icon">
+                <i class="fas fa-user-shield"></i>
+              </div>
+              <h4>Add New Admin</h4>
+              <p>Create new administrator account</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 mb-3">
+            <div class="action-card" (click)="openBlockUsersModal()">
+              <div class="action-icon">
+                <i class="fas fa-ban"></i>
+              </div>
+              <h4>Block Users</h4>
+              <p>Block suspicious user accounts</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 mb-3">
+            <div class="action-card" (click)="viewReports()">
+              <div class="action-icon">
+                <i class="fas fa-chart-bar"></i>
+              </div>
+              <h4>View Reports</h4>
+              <p>Generate system reports</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 mb-3">
+            <div class="action-card" (click)="openSettings()">
+              <div class="action-icon">
+                <i class="fas fa-cog"></i>
+              </div>
+              <h4>System Settings</h4>
+              <p>Manage application settings</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- User Edit Modal -->
+<div class="modal fade" id="userEditModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form #userEditForm="ngForm">
+          <div class="mb-3">
+            <label for="editName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="editName" 
+                   [(ngModel)]="selectedUser.name" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="editEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="editEmail" 
+                   [(ngModel)]="selectedUser.email" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="editRole" class="form-label">Role</label>
+            <select class="form-select" id="editRole" [(ngModel)]="selectedUser.role" name="role">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="editStatus" class="form-label">Status</label>
+            <select class="form-select" id="editStatus" [(ngModel)]="selectedUser.status" name="status">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="blocked">Blocked</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveUserChanges()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>

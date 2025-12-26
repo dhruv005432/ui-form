@@ -1,0 +1,198 @@
+<div class="login-page">
+  <!-- Background Gradient -->
+  <div class="bg-gradient"></div>
+  
+  <!-- Main Container -->
+  <div class="container-fluid vh-100 d-flex align-items-center justify-content-center p-4">
+    <div class="row w-100 g-0 align-items-center">
+      
+      <!-- Left Section - Login Form -->
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <div class="login-form-container" data-aos="fade-up" data-aos-duration="1000">
+          
+          <!-- Page Header -->
+          <div class="text-center mb-4">
+            <div class="logo-section mb-3">
+              <i class="fas fa-user-shield fa-3x text-primary"></i>
+            </div>
+            <h1 class="welcome-title">Welcome Back</h1>
+            <p class="welcome-subtitle">Sign in to continue to your dashboard</p>
+          </div>
+
+          <!-- Login Form -->
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+            
+            <!-- Email Field -->
+            <div class="form-group mb-3">
+              <label for="email" class="form-label">
+                <i class="fas fa-envelope me-2"></i>Email Address / Username
+              </label>
+              <input 
+                type="text" 
+                id="email" 
+                class="form-control form-control-lg" 
+                formControlName="email"
+                placeholder="Enter your email or username"
+                [ngClass]="{ 'is-invalid': isFieldInvalid('email') }"
+                autocomplete="username"
+              >
+              <div class="invalid-feedback" *ngIf="getFieldError('email')">
+                {{ getFieldError('email') }}
+              </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group mb-3">
+              <label for="password" class="form-label">
+                <i class="fas fa-lock me-2"></i>Password
+              </label>
+              <div class="input-group">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  id="password" 
+                  class="form-control form-control-lg" 
+                  formControlName="password"
+                  placeholder="Enter your password"
+                  [ngClass]="{ 'is-invalid': isFieldInvalid('password') }"
+                  autocomplete="current-password"
+                >
+                <button 
+                  type="button" 
+                  class="btn btn-outline-secondary toggle-password"
+                  (click)="togglePasswordVisibility()"
+                  type="button"
+                >
+                  <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" *ngIf="getFieldError('password')">
+                {{ getFieldError('password') }}
+              </div>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                <input 
+                  type="checkbox" 
+                  id="rememberMe" 
+                  class="form-check-input" 
+                  formControlName="rememberMe"
+                  (change)="onRememberMeChange($event)"
+                >
+                <label for="rememberMe" class="form-check-label">
+                  Remember me
+                </label>
+              </div>
+              <a [routerLink]="['/forgot-password']" class="forgot-password-link">
+                Forgot password?
+              </a>
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+              #loginBtn
+              type="submit" 
+              class="btn btn-primary btn-lg w-100 login-btn"
+              formControlName="submitButton"
+              data-aos="zoom-in" 
+              data-aos-delay="200"
+            >
+              <span *ngIf="!isLoading">
+                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+              </span>
+              <span *ngIf="isLoading">
+                <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                Signing in...
+              </span>
+            </button>
+          </form>
+
+          <!-- Register Link -->
+          <div class="text-center mt-4">
+            <p class="register-prompt">
+              Don't have an account? 
+              <a [routerLink]="['/auth/register']" class="register-link">
+                Create Account
+              </a>
+            </p>
+          </div>
+
+          <!-- Demo Credentials -->
+          <div class="demo-credentials mt-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="demo-header">
+              <i class="fas fa-info-circle me-2"></i>Demo Credentials
+            </div>
+            <div class="demo-content">
+              <div class="demo-item">
+                <strong>Admin:</strong> admin&#64;example.com / admin123
+              </div>
+              <div class="demo-item">
+                <strong>User:</strong> user&#64;example.com / user123
+              </div>
+              <div class="demo-item">
+                <strong>Test:</strong> jane&#64;example.com / password123
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right Section - Supporting Image -->
+      <div class="col-lg-6 d-none d-lg-block">
+        <div class="image-section" data-aos="fade-left" data-aos-duration="1000">
+          <div class="image-overlay">
+            <img 
+              src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=800&q=80" 
+              alt="Login illustration" 
+              class="img-fluid"
+            >
+            <div class="overlay-content">
+              <h3>Secure Access</h3>
+              <p>Your gateway to personalized dashboard and features</p>
+              <div class="feature-list">
+                <div class="feature-item">
+                  <i class="fas fa-shield-alt"></i>
+                  <span>Secure Authentication</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-user-lock"></i>
+                  <span>Role-Based Access</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-clock"></i>
+                  <span>Session Management</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="quick-links" data-aos="fade-up" data-aos-delay="600">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <a [routerLink]="['/home']" class="quick-link">
+            <i class="fas fa-home me-2"></i>Back to Home
+          </a>
+        </div>
+        <div class="col-md-4 text-center">
+          <a [routerLink]="['/contact']" class="quick-link">
+            <i class="fas fa-envelope me-2"></i>Contact Support
+          </a>
+        </div>
+        <div class="col-md-4 text-end">
+          <a [routerLink]="['/about']" class="quick-link">
+            <i class="fas fa-info-circle me-2"></i>About Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

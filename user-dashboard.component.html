@@ -1,0 +1,333 @@
+<div class="user-dashboard-container">
+  <!-- Animated Background -->
+  <div class="animated-background">
+    <div class="gradient-overlay"></div>
+  </div>
+
+  <!-- Dashboard Header -->
+  <header class="dashboard-header" data-aos="fade-down">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="/dashboard">
+          <i class="fas fa-tachometer-alt me-2"></i>
+          <span class="fw-bold">UI Forms</span>
+        </a>
+
+        <!-- Page Title -->
+        <div class="page-title mx-auto">
+          <h1 class="h4 mb-0 text-white">User Dashboard</h1>
+        </div>
+
+        <!-- User Profile Dropdown -->
+        <div class="user-profile-dropdown position-relative">
+          <button 
+            class="btn btn-outline-light d-flex align-items-center" 
+            (click)="toggleProfileDropdown()"
+            [attr.aria-expanded]="showProfileDropdown">
+            <i class="fas fa-user-circle me-2"></i>
+            <span class="d-none d-md-inline">{{ userName }}</span>
+            <i class="fas fa-chevron-down ms-2"></i>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <div 
+            class="dropdown-menu dropdown-menu-end shadow-lg"
+            [class.show]="showProfileDropdown"
+            (click)="$event.stopPropagation()">
+            <div class="dropdown-header">
+              <strong>{{ userName }}</strong><br>
+              <small class="text-muted">{{ userEmail }}</small>
+            </div>
+            <hr class="dropdown-divider">
+            <a class="dropdown-item" href="javascript:void(0)" (click)="handleProfileAction('profile')">
+              <i class="fas fa-user me-2"></i> Profile
+            </a>
+            <a class="dropdown-item" href="javascript:void(0)" (click)="handleProfileAction('change-password')">
+              <i class="fas fa-lock me-2"></i> Change Password
+            </a>
+            <hr class="dropdown-divider">
+            <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="handleProfileAction('logout')">
+              <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Dashboard Content -->
+  <main class="dashboard-main">
+    <div class="container-fluid py-4">
+      
+      <!-- Purpose Section -->
+      <section class="purpose-section mb-4" data-aos="fade-up">
+        <div class="card border-0 shadow-sm bg-glass">
+          <div class="card-body p-4">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <div class="purpose-content">
+                  <h2 class="h3 mb-3 text-primary">
+                    <i class="fas fa-bullseye me-2"></i>
+                    Dashboard Purpose
+                  </h2>
+                  <p class="lead mb-3">
+                    Your centralized command center for account management and activity monitoring.
+                  </p>
+                  <div class="purpose-highlights">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <div class="highlight-item d-flex align-items-start">
+                          <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                          <div>
+                            <strong>Account Overview:</strong> Monitor your account status and key information
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="highlight-item d-flex align-items-start">
+                          <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                          <div>
+                            <strong>Quick Actions:</strong> Fast access to essential features and settings
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="highlight-item d-flex align-items-start">
+                          <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                          <div>
+                            <strong>Activity Tracking:</strong> View your recent account activities
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="highlight-item d-flex align-items-start">
+                          <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                          <div>
+                            <strong>Personalized Experience:</strong> Tailored dashboard for your needs
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="purpose-visual text-center">
+                  <div class="purpose-icon-container">
+                    <i class="fas fa-dashboard purpose-icon"></i>
+                  </div>
+                  <div class="purpose-stats mt-3">
+                    <div class="stat-item">
+                      <span class="stat-number">{{ accountStats.totalLogins }}</span>
+                      <span class="stat-label">Total Logins</span>
+                    </div>
+                    <div class="stat-item">
+                      <span class="stat-number">{{ accountStats.profileUpdates }}</span>
+                      <span class="stat-label">Profile Updates</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Welcome Section -->
+      <section class="welcome-section mb-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="card border-0 shadow-sm bg-glass">
+          <div class="card-body p-4">
+            <div class="welcome-content text-center">
+              <h2 class="h2 mb-3">{{ getWelcomeMessage() }}</h2>
+              <p class="lead text-muted mb-0">
+                Welcome back to your personal dashboard. Here's what's happening with your account today.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Action Cards -->
+      <section class="quick-actions-section mb-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="row g-4">
+          <div class="col-lg-3 col-md-6" *ngFor="let action of quickActions">
+            <div class="action-card h-100" data-aos="zoom-in" [attr.data-aos-delay]="action.id * 100">
+              <div class="card border-0 shadow-sm h-100 action-card-item" (click)="navigateToAction(action)">
+                <div class="card-body text-center p-4">
+                  <div class="action-icon mb-3">
+                    <i class="fas {{ action.icon }} {{ getActionCardClass(action.color) }}"></i>
+                  </div>
+                  <h5 class="card-title">{{ action.title }}</h5>
+                  <p class="card-text text-muted small">{{ action.description }}</p>
+                  <div class="action-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Account Overview Panel -->
+      <section class="account-overview-section mb-4" data-aos="fade-right" data-aos-delay="300">
+        <div class="card border-0 shadow-sm bg-glass">
+          <div class="card-header bg-glass border-0">
+            <h3 class="h5 mb-0">
+              <i class="fas fa-user-cog me-2"></i>
+              Account Overview
+            </h3>
+          </div>
+          <div class="card-body p-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="account-item">
+                  <label class="form-label text-muted small">Email Address</label>
+                  <div class="account-value">
+                    <i class="fas fa-envelope me-2 text-muted"></i>
+                    {{ userEmail }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="account-item">
+                  <label class="form-label text-muted small">Mobile Number</label>
+                  <div class="account-value">
+                    <i class="fas fa-phone me-2 text-muted"></i>
+                    {{ userMobile }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="account-item">
+                  <label class="form-label text-muted small">Account Status</label>
+                  <div class="account-value">
+                    <span class="badge {{ getAccountStatusClass() }}">
+                      <i class="fas fa-circle me-1" style="font-size: 0.5em;"></i>
+                      {{ accountStatus }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="account-item">
+                  <label class="form-label text-muted small">Last Login</label>
+                  <div class="account-value">
+                    <i class="fas fa-clock me-2 text-muted"></i>
+                    {{ lastLogin }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent Activity Section -->
+      <section class="recent-activity-section mb-4" data-aos="fade-left" data-aos-delay="400">
+        <div class="card border-0 shadow-sm bg-glass">
+          <div class="card-header bg-glass border-0">
+            <h3 class="h5 mb-0">
+              <i class="fas fa-history me-2"></i>
+              Recent Activity
+            </h3>
+          </div>
+          <div class="card-body p-4">
+            <div class="activity-list">
+              <div class="activity-item" *ngFor="let activity of recentActivities; let last = last">
+                <div class="activity-content d-flex align-items-start">
+                  <div class="activity-icon me-3">
+                    <i class="fas {{ activity.icon }} {{ getActivityIconClass(activity.color) }}"></i>
+                  </div>
+                  <div class="activity-details flex-grow-1">
+                    <div class="activity-description">{{ activity.description }}</div>
+                    <div class="activity-time text-muted small">
+                      {{ formatActivityTimestamp(activity.timestamp) }}
+                    </div>
+                  </div>
+                </div>
+                <hr class="activity-divider" *ngIf="!last">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Statistics Overview -->
+      <section class="stats-section mb-4" data-aos="fade-up" data-aos-delay="500">
+        <div class="row g-4">
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+              <div class="stat-card-body">
+                <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                  <i class="fas fa-sign-in-alt"></i>
+                </div>
+                <div class="stat-info">
+                  <h6 class="stat-label">Total Logins</h6>
+                  <h3 class="stat-value">{{ accountStats.totalLogins }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+              <div class="stat-card-body">
+                <div class="stat-icon bg-info bg-opacity-10 text-info">
+                  <i class="fas fa-user-edit"></i>
+                </div>
+                <div class="stat-info">
+                  <h6 class="stat-label">Profile Updates</h6>
+                  <h3 class="stat-value">{{ accountStats.profileUpdates }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+              <div class="stat-card-body">
+                <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+                  <i class="fas fa-key"></i>
+                </div>
+                <div class="stat-info">
+                  <h6 class="stat-label">Password Changes</h6>
+                  <h3 class="stat-value">{{ accountStats.passwordChanges }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+              <div class="stat-card-body">
+                <div class="stat-icon bg-success bg-opacity-10 text-success">
+                  <i class="fas fa-headset"></i>
+                </div>
+                <div class="stat-info">
+                  <h6 class="stat-label">Support Tickets</h6>
+                  <h3 class="stat-value">{{ accountStats.supportTickets }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Click outside to close dropdown -->
+<div 
+  class="dropdown-backdrop" 
+  *ngIf="showProfileDropdown"
+  (click)="showProfileDropdown = false"></div>

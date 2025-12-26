@@ -1,0 +1,116 @@
+<footer class="footer bg-dark text-light">
+  <div class="container">
+    <!-- Main Footer Content -->
+    <div class="row gy-4" data-aos="fade-up">
+      
+      <!-- Application Branding Section -->
+      <div class="col-lg-4 col-md-6" data-aos="fade-right">
+        <div class="footer-branding">
+          <h3 class="footer-logo">
+            <i class="fas fa-layer-group me-2"></i>UI Form
+          </h3>
+          <p class="footer-tagline">
+            Modern, responsive form builder with seamless user experience and powerful authentication features.
+          </p>
+          <div class="social-links mt-3">
+            <a href="#" class="social-icon" data-aos="zoom-in" data-aos-delay="100" title="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-icon" data-aos="zoom-in" data-aos-delay="200" title="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-icon" data-aos="zoom-in" data-aos-delay="300" title="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="social-icon" data-aos="zoom-in" data-aos-delay="400" title="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Navigation Links -->
+      <div class="col-lg-2 col-md-6" data-aos="fade-right" data-aos-delay="100">
+        <h5 class="footer-title">Quick Links</h5>
+        <ul class="footer-links list-unstyled">
+          <li><a href="/home"><i class="fas fa-home me-2"></i>Home</a></li>
+          <li><a href="/about"><i class="fas fa-info-circle me-2"></i>About</a></li>
+          <li><a href="/contact"><i class="fas fa-envelope me-2"></i>Contact</a></li>
+          <li><a href="/login"><i class="fas fa-sign-in-alt me-2"></i>Login</a></li>
+          <li><a href="/register"><i class="fas fa-user-plus me-2"></i>Register</a></li>
+          <li><a href="/dashboard"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+        </ul>
+      </div>
+
+      <!-- Support & Contact Information -->
+      <div class="col-lg-3 col-md-6" data-aos="fade-right" data-aos-delay="200">
+        <h5 class="footer-title">Support & Contact</h5>
+        <div class="contact-info">
+          <p class="mb-2">
+            <i class="fas fa-envelope me-2"></i>
+            <a href="mailto:support&#64;uiform.com">support&#64;uiform.com</a>
+          </p>
+          <p class="mb-2">
+            <i class="fas fa-phone me-2"></i>
+            <a href="tel:+1234567890">+1 (234) 567-890</a>
+          </p>
+          <p class="mb-2">
+            <i class="fas fa-map-marker-alt me-2"></i>
+            123 Tech Street, Silicon Valley, CA 94025
+          </p>
+          <p class="mb-2">
+            <i class="fas fa-clock me-2"></i>
+            Mon-Fri: 9:00 AM - 6:00 PM PST
+          </p>
+        </div>
+        
+        <!-- Newsletter Subscription -->
+        <div class="newsletter mt-4">
+          <h6 class="footer-subtitle">Stay Updated</h6>
+          <form class="newsletter-form" (ngSubmit)="onNewsletterSubmit($event)">
+            <div class="input-group">
+              <input type="email" class="form-control" placeholder="Enter your email" aria-label="Newsletter email">
+              <button class="btn btn-primary" type="submit">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Legal & Policy Links -->
+      <div class="col-lg-3 col-md-6" data-aos="fade-right" data-aos-delay="300">
+        <h5 class="footer-title">Legal & Policies</h5>
+        <ul class="footer-links list-unstyled">
+          <li><a href="/privacy-policy"><i class="fas fa-shield-alt me-2"></i>Privacy Policy</a></li>
+          <li><a href="/terms-conditions"><i class="fas fa-file-contract me-2"></i>Terms & Conditions</a></li>
+          <li><a href="/security-policy"><i class="fas fa-lock me-2"></i>Security Policy</a></li>
+          <li><a href="/cookie-policy"><i class="fas fa-cookie me-2"></i>Cookie Policy</a></li>
+          <li><a href="/gdpr-compliance"><i class="fas fa-user-shield me-2"></i>GDPR Compliance</a></li>
+          <li><a href="/accessibility"><i class="fas fa-universal-access me-2"></i>Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Copyright Section -->
+    <div class="footer-bottom border-top border-secondary mt-4 pt-4">
+      <div class="row align-items-center">
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <p class="mb-0 copyright-text">
+            <i class="far fa-copyright me-1"></i>{{ currentYear }} UI Form. All rights reserved.
+          </p>
+          <p class="mb-0 version-info small text-muted">
+            Version 1.0.0 | Built with Angular 17 | Last updated: {{ currentYear }}
+          </p>
+        </div>
+        <div class="col-md-6 text-md-end" data-aos="fade-up" data-aos-delay="500">
+          <div class="footer-bottom-links">
+            <a href="/sitemap" class="me-3"><i class="fas fa-sitemap me-1"></i>Sitemap</a>
+            <a href="/rss" class="me-3"><i class="fas fa-rss me-1"></i>RSS Feed</a>
+            <a href="#" id="theme-toggle"><i class="fas fa-moon me-1"></i>Dark Mode</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
